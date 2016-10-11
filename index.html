@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="stylesheets/styles.css" rel="stylesheet" type="text/css">
+    <style>
+        .ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .ul li{
+            float: left;
+            margin: 10px;
+            border:1px solid #fff;
+            transition: all .4s;
+        }
+        #bigImg{
+            font-size: 0;
+        }
+    </style>
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script>
+        $(function(){
+            var table=$("table");
+            var tr=table.find('tr');
+            var sum=0;
+            var count=0;
+            for(var i=1;i<tr.length-1;i++){
+                var td=tr.eq(i).find('td');
+                var Scount=parseInt(td.eq(2).text());
+                var sSum=Scount*parseInt(td.eq(1).text());
+                sum+=sSum;
+                count+=Scount;
+                td.eq(3).text(sSum);
+            }
+            tr.last().find('td').eq(3).text(sum);
+            tr.last().find('td').eq(2).text(count);
+
+            $("a.delete").on("click",function(ev){
+                ev.preventDefault();
+                var td=$(this).parents("tr").find("td");
+                var Scount=parseInt(td.eq(2).text());
+                sum-=Scount*parseInt(td.eq(1).text());
+                count-=Scount;
+                tr.last().find('td').eq(3).text(sum);
+                tr.last().find('td').eq(2).text(count);
+                $(this).parents("tr").remove();
+            });
+
+            $("#smallImg").find("li").on("mouseover",function(){
+                $("#bigImg").find("img").attr("src",$(this).find("img").attr("src").replace("50x64","350x449"));
+                $(this).css("borderColor","red").siblings().css("borderColor","#fff");
+            });
+        });
+    </script>
+</head>
+<body>
+<table class="table">
+    <tr><td>name</td><td>price</td><td>count</td><td>sum</td><td>Delete</td></tr>
+    <tr><td>name1</td><td>123</td><td>2</td><td></td><td><a href="#" class="delete">Delete</a></td></tr>
+    <tr><td>name2</td><td>64</td><td>5</td><td></td><td><a href="#" class="delete">Delete</a></td></tr>
+    <tr><td>name3</td><td>35</td><td>6</td><td></td><td><a href="#" class="delete">Delete</a></td></tr>
+    <tr><td>name4</td><td>15</td><td>2</td><td></td><td><a href="#" class="delete">Delete</a></td></tr>
+    <tr><td>sum</td><td></td><td></td><td></td></tr>
+</table>
+<div id="bigImg">
+    <img src="images/5729bfc5Nc1f15db9.jpg!cc_350x449.jpg"/>
+</div>
+<div id="smallImg">
+    <ul class="ul clearfix">
+        <li><img src="images/5729bfc5Nc1f15db9.jpg!cc_50x64.jpg"/></li>
+        <li><img src="images/5729bfc6N3c117111.jpg!cc_50x64.jpg"/></li>
+        <li><img src="images/5729bfc6N5bbb297e.jpg!cc_50x64.jpg"/></li>
+        <li><img src="images/5729bfc7N1bb9dc3e.jpg!cc_50x64.jpg"/></li>
+    </ul>
+</div>
+</body>
+</html>
